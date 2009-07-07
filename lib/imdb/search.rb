@@ -31,7 +31,7 @@ module Imdb
     end
     
     def parse_movie
-      id = document.at("a[@name='poster']")['href'][/\d+$/]
+      id = document.at("//span[@class='pro-link']/a")['href'][/\/tt\d+\/$/][/\d+/]
       title = document.at("h1").innerHTML.split('<span').first.strip.imdb_unescape_html
       [Imdb::Movie.new(id, title)]
     end
