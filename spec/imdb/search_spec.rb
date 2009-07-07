@@ -38,3 +38,18 @@ describe "Imdb::Search with an exact match" do
     @search.movies.first.title.should =~ /The Matrix Revolutions/i
   end
 end
+
+describe "Imdb::Search with an exact match for movie with no poster" do
+  before(:each) do
+    @search = Imdb::Search.new("Kannethirey Thondrinal")
+  end
+
+  it "should find one result" do
+    @search.movies.size.should eql(1)
+  end
+
+  it "should have the corrected title" do
+    @search.movies.first.title.should =~ /Kannethirey Thondrinal/i
+  end
+end
+
