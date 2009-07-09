@@ -72,6 +72,12 @@ module Imdb
     def year
       document.search('a[@href^="/Sections/Years/"]').innerHTML.to_i
     end
+    
+    # Returns a date containing the release date fo the movie.
+    def release_date
+      @date = Date.strptime(document.search("//h5[text()^='Release Date']/..").innerHTML.split("\n")[2].gsub(/<.+>.+<\/.+>/, '').split('(').first.strip,
+                            '%d %b %Y') rescue nil
+    end
         
     private
     
@@ -79,6 +85,8 @@ module Imdb
     def document
       @document ||= Hpricot(Imdb::Movie.find_by_id(@id))
     end
+    
+    private 
     
     # Use HTTParty to fetch the raw HTML for this movie.
     def self.find_by_id(imdb_id)
